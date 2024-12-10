@@ -1,4 +1,4 @@
-import { API_KEY, API_SECRET } from './consts.js';
+import { API_KEY, API_SECRET } from '../consts.js';
 import { Spot } from '@binance/connector';
 
 export class Binance {
@@ -7,7 +7,7 @@ export class Binance {
     }
 
     async getBalances(asset) {
-        const { data } = await client.account();
+        const { data } = await this.client.account();
         const balances = data.balances.filter(b => b.asset.includes(asset));
 
         return balances;
@@ -54,11 +54,21 @@ export class Binance {
         }
 
         const type = 'LIMIT';
-        const order = await client.newOrder(symbol, side, type, {
+        const { data: order } = await client.newOrder(symbol, side, type, {
             price,
             quantity,
             timeInForce: 'GTC',
         });
         return order;
+    }
+
+    async getOpenOrders(symbol) {
+        if(!symbol) {
+            throw new Error('Symbol is required');
+        }
+
+        const { data: orders } = await this.client.openOrders({ symbol });
+
+        return orders;
     }
 }
