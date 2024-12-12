@@ -1,0 +1,18 @@
+{
+  "name": "trade-bot-binance",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "pm2 start index.js --name \"trade-bot-binance\" --no-autorestart --cron \"*/1 * * * *\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@binance/connector": "^3.5.0",
+    "dotenv": "^16.4.7"
+  }
+}
